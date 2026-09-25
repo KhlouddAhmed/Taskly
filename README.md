@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/images/preview.png" alt="Taskly Preview" width="100%" />
+  <img src="public/preview.png" alt="Taskly Preview" width="100%" />
 </div>
 
 ---
