@@ -1,0 +1,171 @@
+<!-- page wrapper: full screen, background color from design tokens -->
+<div class="bg-background min-h-screen">
+
+    <!-- logo: top-left, outside the card -->
+    <header class="p-6">
+        <div class="flex items-center gap-2">
+            <img src="taskly-icon.svg" alt="Taskly logo" width="18" height="20" />
+            <span class="logo-text">TASKLY</span>
+        </div>
+    </header>
+
+    <!-- centered card wrapper -->
+    <main class="flex items-center justify-center px-4 pb-10">
+        <div class="w-full max-w-[580px] rounded-lg bg-white p-10 shadow-sm">
+
+            <!-- card heading -->
+            <div class="mb-8 text-center">
+                <h1 class="text-slate-darkest text-[32px] font-semibold leading-10">
+                    Create your workspace
+                </h1>
+                <p class="text-slate-mid mt-1 text-sm">
+                    Join the editorial approach to task management.
+                </p>
+            </div>
+
+            <!-- sign up form -->
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="flex flex-col gap-5">
+
+                <!-- name field -->
+                <div class="form-field">
+                    <label class="form-label" [class.form-label-error]="f['name'].invalid && f['name'].touched">
+                        NAME
+                    </label>
+                    <input formControlName="name" type="text" placeholder="Enter your full name"
+                        [class]="f['name'].invalid && f['name'].touched ? 'form-input-error' : 'form-input'" />
+                    <!-- hint shown before touching -->
+                    @if (!f['name'].touched) {
+                    <span class="text-slate-mid text-[11px]">3-50 characters, letters only.</span>
+                    }
+                    <!-- validation errors -->
+                    @if (f['name'].touched && f['name'].errors) {
+                    @if (f['name'].errors['required']) {
+                    <span class="text-error-dark text-[11px]">Name is required.</span>
+                    } @else if (f['name'].errors['minlength']) {
+                    <span class="text-error-dark text-[11px]">Minimum 3 characters.</span>
+                    } @else if (f['name'].errors['maxlength']) {
+                    <span class="text-error-dark text-[11px]">Maximum 50 characters.</span>
+                    } @else if (f['name'].errors['pattern']) {
+                    <span class="text-error-dark text-[11px]">Letters and single spaces only. No numbers or
+                        symbols.</span>
+                    }
+                    }
+                </div>
+
+                <!-- email field -->
+                <div class="form-field">
+                    <label class="form-label" [class.form-label-error]="f['email'].invalid && f['email'].touched">
+                        EMAIL
+                    </label>
+                    <input formControlName="email" type="email" placeholder="yourname@company.com"
+                        [class]="f['email'].invalid && f['email'].touched ? 'form-input-error' : 'form-input'" />
+                    @if (f['email'].touched && f['email'].errors) {
+                    @if (f['email'].errors['required']) {
+                    <span class="text-error-dark text-[11px]">Email is required.</span>
+                    } @else if (f['email'].errors['email']) {
+                    <span class="text-error-dark text-[11px]">Enter a valid email address.</span>
+                    }
+                    }
+                </div>
+
+                <!-- job title field (optional) -->
+                <div class="form-field">
+                    <label class="form-label">JOB TITLE (OPTIONAL)</label>
+                    <input formControlName="jobTitle" type="text" placeholder="e.g. Project Manager"
+                        class="form-input" />
+                </div>
+
+                <!-- password + confirm password: side by side on desktop, stacked on mobile -->
+                <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+
+                    <!-- password field -->
+                    <div class="form-field">
+                        <label class="form-label"
+                            [class.form-label-error]="f['password'].invalid && f['password'].touched">
+                            PASSWORD
+                        </label>
+                        <div class="relative">
+                            <input formControlName="password" [type]="showPassword() ? 'text' : 'password'"
+                                placeholder="Password"
+                                [class]="f['password'].invalid && f['password'].touched ? 'form-input-error pr-10' : 'form-input pr-10'" />
+                            <!-- toggle password visibility -->
+                            <button type="button" (click)="togglePassword()"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+                                aria-label="Toggle password visibility">
+                                <img [src]="showPassword() ? 'icons/eye-off.svg' : 'icons/eye-on.svg'" alt=""
+                                    width="20" height="20" />
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- confirm password field -->
+                    <div class="form-field">
+                        <label class="form-label"
+                            [class.form-label-error]="f['confirmPassword'].touched && (f['confirmPassword'].errors || form.errors?.['passwordMismatch'])">
+                            CONFIRM PASSWORD
+                        </label>
+                        <div class="relative">
+                            <input formControlName="confirmPassword" [type]="showConfirm() ? 'text' : 'password'"
+                                placeholder="Repeat your password"
+                                [class]="f['confirmPassword'].touched && (f['confirmPassword'].errors || form.errors?.['passwordMismatch']) ? 'form-input-error pr-10' : 'form-input pr-10'" />
+                            <!-- toggle confirm password visibility -->
+                            <button type="button" (click)="toggleConfirm()"
+                                class="absolute right-3 top-1/2 -translate-y-1/2"
+                                aria-label="Toggle confirm password visibility">
+                            </button>
+                        </div>
+                        @if (f['confirmPassword'].touched && form.errors?.['passwordMismatch']) {
+                        <span class="text-error-dark text-[11px]">Passwords do not match.</span>
+                        }
+                    </div>
+
+                </div>
+
+                <!-- password strength rules box: shown when user starts typing password -->
+                @if (f['password'].dirty) {
+                <div class="bg-[#E8EDFF] rounded-md p-4">
+
+                    <!-- rule: min 8 characters -->
+                    <div class="flex items-center gap-2">
+                        <img [src]="passwordRules.minLength ? 'icons/check-pass.svg' : 'icons/uncheck-pass.svg'" alt=""
+                            width="11.67" height="11.67" />
+                        <span class="text-[11px]" style="color: #737685">At least 8 characters</span>
+                    </div>
+
+                    <!-- rule: uppercase, lowercase, and digit -->
+                    <div class="flex items-center gap-2 mt-2">
+                        <img [src]="passwordRules.upperLower && passwordRules.digit ? 'icons/check-pass.svg' : 'icons/uncheck-pass.svg'"
+                            alt="" width="11.67" height="11.67" />
+                        <span class="text-[11px]" style="color: #737685">One uppercase, lowercase, and digit</span>
+                    </div>
+
+                    <!-- rule: special character -->
+                    <div class="flex items-center gap-2 mt-2">
+                        <img [src]="passwordRules.special ? 'icons/check-pass.svg' : 'icons/uncheck-pass.svg'" alt=""
+                            width="11.67" height="11.67" />
+                        <span class="text-[11px]" style="color: #737685">One special character</span>
+                    </div>
+
+                </div>
+                }
+
+                <!-- api error message -->
+                @if (apiError()) {
+                <p class="text-error-dark text-center text-sm">{{ apiError() }}</p>
+                }
+
+                <!-- submit button -->
+                <button type="submit" class="btn-primary w-full" [disabled]="isLoading()">
+                    {{ isLoading() ? 'Creating account...' : 'Create Account' }}
+                </button>
+
+                <!-- login link -->
+                <p class="text-slate-mid text-center text-sm pt-8">
+                    Already have an account?
+                    <a routerLink="/login" class="text-primary font-semibold">Log in</a>
+                </p>
+
+            </form>
+        </div>
+    </main>
+</div>
