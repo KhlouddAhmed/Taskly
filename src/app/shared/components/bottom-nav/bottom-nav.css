@@ -1,8 +1,18 @@
-/* Active item */
-a.active-nav-item .nav-label {
-  color: var(--color-primary);
+:host {
+  display: block;
 }
 
-a.active-nav-item .nav-icon {
+@media (min-width: 768px) {
+  :host {
+    display: none !important;
+  }
+}
+
+a.active-bottom-link {
+  color: #003d9b !important;
+  font-weight: 700;
+}
+
+a.active-bottom-link .nav-icon {
   filter: invert(15%) sepia(90%) saturate(2000%) hue-rotate(200deg) brightness(80%);
 }

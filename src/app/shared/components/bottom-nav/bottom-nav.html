@@ -1,11 +1,11 @@
-<nav class="fixed bottom-0 left-0 right-0 z-30 flex h-16 items-center justify-around border-t border-[--color-slate-light] bg-[--color-background] lg:hidden">
+<nav class="flex h-16 w-full items-center justify-around border-t border-black/10 bg-[#F1F3FF] px-2 shadow-sm">
   @for (item of items; track item.route) {
     <a
       [routerLink]="item.route"
-      routerLinkActive="active-nav-item"
-      class="nav-link flex flex-col items-center gap-1 px-2 py-1 text-[--color-slate-mid]">
-      <img [src]="item.icon" [alt]="item.label" class="nav-icon h-6 w-6" />
-      <span class="nav-label text-[10px] font-semibold">{{ item.label }}</span>
+      routerLinkActive="active-bottom-link"
+      class="flex flex-col items-center justify-center gap-1 text-[11px] font-medium text-[#041B3C]/70 transition-colors">
+      <img [src]="item.icon" [alt]="item.label" class="nav-icon h-5 w-5" />
+      <span>{{ item.label }}</span>
     </a>
   }
 </nav>

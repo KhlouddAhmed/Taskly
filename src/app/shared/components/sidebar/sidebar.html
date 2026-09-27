@@ -1,143 +1,143 @@
 <aside
   [class]="isCollapsed() ? 'w-16' : 'w-64'"
-  class="fixed top-0 bottom-0 left-0 z-20 hidden flex-col transition-all duration-300 lg:flex"
-  style="background: #F1F3FF;">
+  class="fixed top-0 bottom-0 left-0 z-20 hidden flex-col justify-between bg-[#F1F3FF] p-4 transition-all duration-300 lg:flex">
 
-  <!-- Logo -->
-  <div class="flex h-16 items-center px-4">
-    @if (!isCollapsed()) {
-      <div class="flex items-center gap-2">
-        <img src="icons/taskly-icon.svg" alt="Taskly" style="width:18px; height:20px;" />
-        <span style="font-size:20px; font-weight:700; line-height:28px; letter-spacing:-0.5px; color:#041B3C;">TASKLY</span>
-      </div>
-    } @else {
-      <img src="icons/taskly-icon.svg" alt="Taskly" class="mx-auto" style="width:18px; height:20px;" />
-    }
-  </div>
+  <!-- Top Container (Logo + Navigation + Active Project Accordion) -->
+  <div class="flex flex-col">
 
-  <!-- Nav -->
-  <nav class="flex flex-col gap-1 px-4">
-    @for (item of navItems; track item.route) {
-      <a
-        [routerLink]="item.route"
-        routerLinkActive="active-nav-item"
-        class="nav-link flex items-center gap-3 rounded-[4px] transition"
-        [class.justify-center]="isCollapsed()"
-        style="padding: 10px 12px;">
-        <img [src]="item.icon" [alt]="item.label" class="nav-icon shrink-0" style="width:20px; height:20px;" />
+    <!-- Logo Header -->
+    <div class="mb-8 flex h-9 items-center px-2">
+      @if (!isCollapsed()) {
+        <div class="flex items-center gap-2">
+          <img src="icons/taskly-icon.svg" alt="Taskly" class="h-5 w-5 shrink-0 " />
+          <span class="text-[20px] font-bold leading-[28px] tracking-[-0.5px] text-[#041B3C]">TASKLY</span>
+        </div>
+      } @else {
+        <div class="flex h-full w-full items-center justify-center">
+          <img src="icons/taskly-icon.svg" alt="Taskly" class="h-5 w-5" />
+        </div>
+      }
+    </div>
+
+    <!-- Main Nav Links -->
+    <nav class="flex flex-col gap-1">
+      @for (item of navItems; track item.route) {
         @if (!isCollapsed()) {
-          <span class="nav-label" style="font-size:14px; font-weight:500; line-height:20px; color:#041B3C;">{{ item.label }}</span>
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="active-nav-item"
+            class="nav-link flex cursor-pointer items-center gap-3 rounded-[4px] px-3 py-[10px] transition">
+            <img [src]="item.icon" [alt]="item.label" class="nav-icon h-5 w-5 shrink-0" />
+            <span class="nav-label text-sm font-medium text-[#041B3C]">{{ item.label }}</span>
+          </a>
+        } @else {
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="active-nav-item"
+            class="nav-link mx-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-[4px] transition">
+            <img [src]="item.icon" [alt]="item.label" class="nav-icon h-5 w-5" />
+          </a>
         }
-      </a>
-    }
-  </nav>
-
-  <!-- Divider -->
-  <div class="mx-4 my-2 border-t border-[--color-slate-light]"></div>
-
-  <!-- Active Project Section -->
-  <div class="relative flex flex-col px-4">
-
-    @if (!isCollapsed()) {
-
-      <!-- Accordion Header -->
-      <button
-        (click)="toggleProject()"
-        class="flex w-full items-center justify-between transition"
-        [style]="isProjectOpen()
-          ? 'background:#D7E2FF; border-radius:6px 6px 0 0; padding:12px; gap:12px;'
-          : 'background:#FFFFFF; border-radius:6px; padding:12px; gap:12px;'">
-        <div class="flex items-center gap-3">
-          <img src="icons/projects.svg" alt="project" style="width:20px; height:20px;" />
-          <span style="font-size:14px; font-weight:500; line-height:20px; color:#041B3C;" class="max-w-[130px] truncate">Active Project Na...</span>
-        </div>
-        <img
-          src="icons/arrow-up.svg"
-          alt="toggle"
-          [class]="isProjectOpen() ? 'transition-transform duration-200' : 'rotate-180 transition-transform duration-200'"
-          style="width:16px; height:16px;" />
-      </button>
-
-      <!-- Accordion Body -->
-      @if (isProjectOpen()) {
-        <div class="flex flex-col" style="background:#FFFFFF; border-radius:0 0 6px 6px; padding:4px;">
-          @for (link of projectLinks; track link.route) {
-            <a
-              [routerLink]="link.route"
-              routerLinkActive="active-project-link"
-              class="flex items-center gap-3 rounded-[4px] transition hover:bg-[#F1F3FF]"
-              style="padding:10px 12px;">
-              <img [src]="link.icon" [alt]="link.label" class="shrink-0" style="width:20px; height:18px;" />
-              <span style="font-size:14px; font-weight:500; line-height:20px; color:#041B3C;">{{ link.label }}</span>
-            </a>
-          }
-        </div>
       }
+    </nav>
 
-    } @else {
+    <!-- Frame 5: Active Project Section -->
+    <div class="mt-3 border-t border-black/10 pt-4">
+      @if (!isCollapsed()) {
 
-      <!-- Collapsed: project icon -->
-      <button
-        (click)="togglePopup()"
-        [class]="isPopupOpen()
-          ? 'mx-auto flex h-10 w-10 items-center justify-center rounded-md bg-white transition'
-          : 'mx-auto flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-white'">
-        <img src="icons/projects.svg" alt="project" style="width:20px; height:20px;" />
-      </button>
+        <!-- Frame 8: Accordion Header -->
+        <button
+          (click)="toggleProject()"
+          class="flex h-12 w-full cursor-pointer items-center justify-between p-3 transition"
+          [class]="isProjectOpen() ? 'rounded-t-[6px] bg-[#D7E2FF]' : 'rounded-[6px] bg-white'">
+          <div class="flex items-center gap-3">
+            <img src="icons/projects.svg" alt="project" class="h-5 w-5 shrink-0" />
+            <span class="max-w-[132px] truncate text-sm font-semibold text-[#041B3C]">Active Project Na...</span>
+          </div>
+          <img
+            src="icons/arrow-up.svg"
+            alt="toggle"
+            [class]="isProjectOpen() ? 'transition-transform duration-200' : 'rotate-180 transition-transform duration-200'"
+            class="h-4 w-4 shrink-0" />
+        </button>
 
-      <!-- Popup -->
-      @if (isPopupOpen()) {
-        <div class="absolute left-14 top-2 z-50 w-48 rounded-lg p-2 shadow-lg" style="background:#F1F3FF;">
-          @for (link of projectLinks; track link.route) {
-            <a
-              [routerLink]="link.route"
-              routerLinkActive="bg-white"
-              class="flex items-center gap-3 rounded-[4px] transition hover:bg-white"
-              style="padding:10px 12px;">
-              <img [src]="link.icon" [alt]="link.label" class="shrink-0" style="width:20px; height:18px;" />
-              <span style="font-size:14px; font-weight:500; line-height:20px; color:#041B3C;">{{ link.label }}</span>
-            </a>
-          }
-        </div>
+        <!-- Frame 7: Accordion Body -->
+        @if (isProjectOpen()) {
+          <div class="flex flex-col gap-1 rounded-b-[6px] bg-white p-2">
+            @for (link of projectLinks; track link.route) {
+              <a
+                [routerLink]="link.route"
+                routerLinkActive="active-project-link"
+                class="flex cursor-pointer items-center gap-3 rounded-[4px] px-4 py-[10px] text-sm font-medium text-[#041B3C] transition hover:bg-[#F1F3FF]">
+                <img [src]="link.icon" [alt]="link.label" class="h-[18px] w-5 shrink-0" />
+                <span>{{ link.label }}</span>
+              </a>
+            }
+          </div>
+        }
+
+      } @else {
+
+        <!-- Collapsed Icon Button -->
+        <button
+          (click)="togglePopup()"
+          class="mx-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-[6px] bg-[#D7E2FF] transition">
+          <img src="icons/projects.svg" alt="project" class="h-5 w-5" />
+        </button>
+
+        <!-- Collapsed Popup -->
+        @if (isPopupOpen()) {
+          <div class="absolute left-16 z-50 w-48 rounded-[6px] bg-white p-2 shadow-lg">
+            @for (link of projectLinks; track link.route) {
+              <a
+                [routerLink]="link.route"
+                routerLinkActive="active-project-link"
+                class="flex cursor-pointer items-center gap-3 rounded-[4px] px-4 py-[10px] text-sm font-medium text-[#041B3C] transition hover:bg-[#F1F3FF]">
+                <img [src]="link.icon" [alt]="link.label" class="h-[18px] w-5 shrink-0" />
+                <span>{{ link.label }}</span>
+              </a>
+            }
+          </div>
+        }
+
       }
+    </div>
 
-    }
   </div>
 
-  <!-- Spacer -->
-  <div class="flex-1"></div>
+  <!-- HorizontalBorder: Bottom Actions -->
+  <div class="flex flex-col gap-1 border-t border-[#C3C6D6]/20 pt-6">
+    @if (!isCollapsed()) {
+      <button
+        (click)="toggle()"
+        class="flex cursor-pointer items-center gap-3 rounded-[4px] px-3 py-[10px] transition hover:bg-white/60">
+        <img src="icons/arrow-left.svg" alt="collapse" class="h-5 w-5 shrink-0" />
+        <span class="text-sm font-medium text-[#041B3C]">Collapse</span>
+      </button>
 
-  <!-- Bottom: collapse + logout -->
-  <div class="flex flex-col gap-1 border-t border-[--color-slate-light] px-4 py-3">
-
-    <button
-      (click)="toggle()"
-      class="flex items-center gap-3 rounded-[4px] transition hover:bg-white"
-      [class.justify-center]="isCollapsed()"
-      style="padding:10px 12px;">
-      <img
-        src="icons/arrow-left.svg"
-        alt="collapse"
-        [class]="isCollapsed() ? 'rotate-180 transition-transform duration-300' : 'transition-transform duration-300'"
-        style="width:20px; height:20px;" />
-      @if (!isCollapsed()) {
-        <span style="font-size:14px; font-weight:500; line-height:20px; color:#041B3C;">Collapse</span>
-      }
-    </button>
-
-    <button
-      (click)="performLogout()"
-      [disabled]="isLoggingOut()"
-      class="flex items-center gap-3 rounded-[4px] transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
-      [class.justify-center]="isCollapsed()"
-      style="padding:10px 12px;">
-      <img src="icons/log-out.svg" alt="logout" class="shrink-0" style="width:20px; height:20px;" />
-      @if (!isCollapsed()) {
-        <span style="font-size:14px; font-weight:500; line-height:20px; color:#BA1A1A;">
+      <button
+        (click)="performLogout()"
+        [disabled]="isLoggingOut()"
+        class="flex cursor-pointer items-center gap-3 rounded-[4px] px-3 py-[10px] transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50">
+        <img src="icons/log-out.svg" alt="logout" class="h-5 w-5 shrink-0" />
+        <span class="text-sm font-medium text-[#BA1A1A]">
           {{ isLoggingOut() ? 'Logging out...' : 'Logout' }}
         </span>
-      }
-    </button>
+      </button>
+    } @else {
+      <button
+        (click)="toggle()"
+        class="mx-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-[4px] transition hover:bg-white/60">
+        <img src="icons/arrow-left.svg" alt="collapse" class="h-5 w-5 rotate-180" />
+      </button>
 
+      <button
+        (click)="performLogout()"
+        [disabled]="isLoggingOut()"
+        class="mx-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-[4px] transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50">
+        <img src="icons/log-out.svg" alt="logout" class="h-5 w-5" />
+      </button>
+    }
   </div>
+
 </aside>

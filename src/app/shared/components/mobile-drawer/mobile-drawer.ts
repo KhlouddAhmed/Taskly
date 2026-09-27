@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth';
 
 @Component({
-  selector: 'app-mobile-drawer',
   imports: [RouterLink, RouterLinkActive],
-  templateUrl: './mobile-drawer.html',
+  selector: 'app-mobile-drawer',
   styleUrl: './mobile-drawer.css',
+  templateUrl: './mobile-drawer.html',
 })
 export class MobileDrawer {
   private authService = inject(AuthService);

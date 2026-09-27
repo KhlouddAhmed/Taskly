@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'app-bottom-nav',
   imports: [RouterLink, RouterLinkActive],
-  templateUrl: './bottom-nav.html',
+  selector: 'app-bottom-nav',
   styleUrl: './bottom-nav.css',
+  templateUrl: './bottom-nav.html',
 })
 export class BottomNav {
   readonly items = [

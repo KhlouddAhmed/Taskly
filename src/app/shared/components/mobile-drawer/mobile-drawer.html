@@ -6,49 +6,47 @@
   </div>
 }
 
-<!-- Drawer -->
+<!-- Drawer Container -->
 <div
   [class]="isOpen()
-    ? 'fixed top-0 bottom-0 left-0 z-50 flex w-full flex-col bg-white transition-transform duration-300 translate-x-0 lg:hidden'
-    : 'fixed top-0 bottom-0 left-0 z-50 flex w-full flex-col bg-white transition-transform duration-300 -translate-x-full lg:hidden'">
+    ? 'fixed top-0 bottom-0 left-0 z-50 flex w-full flex-col bg-[#F9F9FF] p-4 transition-transform duration-300 translate-x-0 lg:hidden'
+    : 'fixed top-0 bottom-0 left-0 z-50 flex w-full flex-col bg-[#F9F9FF] p-4 transition-transform duration-300 -translate-x-full lg:hidden'">
 
   <!-- Header -->
-  <div class="flex h-16 items-center justify-between border-b border-[--color-slate-light] px-4">
+  <div class="flex h-12 items-center justify-between px-1">
     <div class="flex items-center gap-2">
       <img src="icons/taskly-icon.svg" alt="Taskly" class="h-6 w-6" />
       <span class="text-base font-bold tracking-widest text-[--color-slate-darkest]">TASKLY</span>
     </div>
-    <button (click)="close.emit()" class="p-1 text-[--color-slate-mid]">
+    <button (click)="close.emit()" class="p-1 text-[--color-slate-mid] hover:opacity-75">
       <img src="icons/close.svg" alt="close" class="h-5 w-5" />
     </button>
   </div>
 
-  <!-- Nav -->
-  <nav class="flex flex-col gap-1 p-4">
+  <!-- Main Navigation Links -->
+  <nav class="mt-4 flex flex-col gap-1.5">
     @for (item of navItems; track item.route) {
       <a
         [routerLink]="item.route"
         routerLinkActive="active-nav-item"
         (click)="close.emit()"
-        class="nav-link flex items-center gap-3 rounded-md px-3 py-2 text-sm transition hover:bg-[--color-surface-low]">
+        class="nav-link flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-[--color-slate-darkest] transition hover:bg-white/60">
         <img [src]="item.icon" [alt]="item.label" class="nav-icon h-5 w-5 shrink-0" />
-        <span class="nav-label text-[--color-slate-darkest]">{{ item.label }}</span>
+        <span class="nav-label">{{ item.label }}</span>
       </a>
     }
   </nav>
 
   <!-- Divider -->
-  <div class="mx-4 border-t border-[--color-slate-light]"></div>
+  <div class="my-3 mx-2 border-t border-[--color-slate-light]"></div>
 
-  <!-- Project Accordion -->
-  <div class="flex flex-col gap-1 p-4">
-
-    <!-- Accordion Header -->
+  <!-- Active Project Accordion Card -->
+  <div class="rounded-2xl bg-[--color-surface-highest] p-2.5">
+    
+    <!-- Accordion Header Button -->
     <button
       (click)="toggleProject()"
-      [class]="isProjectOpen
-        ? 'flex w-full items-center justify-between rounded-md bg-[--color-surface-highest] px-3 py-2 text-sm font-medium text-[--color-slate-darkest]'
-        : 'flex w-full items-center justify-between rounded-md bg-white border border-[--color-slate-light] px-3 py-2 text-sm font-medium text-[--color-slate-darkest]'">
+      class="flex w-full items-center justify-between px-2 py-1.5 text-sm font-bold text-[--color-slate-darkest]">
       <div class="flex items-center gap-3">
         <img src="icons/projects.svg" alt="project" class="h-5 w-5 shrink-0" />
         <span class="max-w-[200px] truncate">Active Project Na...</span>
@@ -61,16 +59,16 @@
           : 'h-4 w-4 rotate-180 transition-transform duration-200'" />
     </button>
 
-    <!-- Accordion Body -->
+    <!-- Accordion Body (White Nested Container) -->
     @if (isProjectOpen) {
-      <div class="flex flex-col rounded-md bg-white">
+      <div class="mt-2 flex flex-col gap-1 rounded-xl bg-white p-2 shadow-xs">
         @for (link of projectLinks; track link.route) {
           <a
             [routerLink]="link.route"
-            routerLinkActive="bg-[--color-surface-low]"
+            routerLinkActive="bg-[--color-surface-low] font-semibold"
             (click)="close.emit()"
-            class="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-[--color-slate-darkest] transition hover:bg-[--color-surface-low]">
-            <img [src]="link.icon" [alt]="link.label" class="h-5 w-5 shrink-0" />
+            class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-[--color-slate-darkest] transition hover:bg-[--color-surface-low]">
+            <img [src]="link.icon" [alt]="link.label" class="h-4 w-4 shrink-0" />
             <span>{{ link.label }}</span>
           </a>
         }
@@ -82,12 +80,12 @@
   <!-- Spacer -->
   <div class="flex-1"></div>
 
-  <!-- Logout -->
-  <div class="border-t border-[--color-slate-light] p-4">
+  <!-- Logout Section -->
+  <div class="border-t border-[--color-slate-light] pt-4">
     <button
       (click)="performLogout()"
       [disabled]="isLoggingOut()"
-      class="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-[--color-error] transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50">
+      class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold text-[--color-error] transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50">
       <img src="icons/log-out.svg" alt="logout" class="h-5 w-5 shrink-0" />
       <span>{{ isLoggingOut() ? 'Logging out...' : 'Logout' }}</span>
     </button>

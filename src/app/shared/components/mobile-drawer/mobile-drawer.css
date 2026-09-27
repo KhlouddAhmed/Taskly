@@ -1,13 +1,18 @@
-/* Active nav item */
-a.active-nav-item {
-  background-color: white;
+:host {
+  display: block;
 }
 
-a.active-nav-item .nav-icon {
-  filter: invert(15%) sepia(90%) saturate(2000%) hue-rotate(200deg) brightness(80%);
+/* Active navigation card styling (White Card with Shadow) */
+a.active-nav-item {
+  background-color: #ffffff !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
 }
 
 a.active-nav-item .nav-label {
   color: var(--color-primary);
-  font-weight: 500;
+}
+
+a.active-nav-item .nav-icon {
+  filter: invert(15%) sepia(90%) saturate(2000%) hue-rotate(200deg) brightness(80%);
 }
