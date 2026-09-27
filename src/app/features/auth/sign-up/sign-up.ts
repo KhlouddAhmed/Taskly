@@ -7,7 +7,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { Auth } from '../../../core/services/auth';
+import { AuthService } from '../../../core/services/auth';
 
 // custom validator: checks that password and confirmPassword match
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -17,15 +17,15 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
 }
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.html',
-  styleUrl: './sign-up.css',
   imports: [ReactiveFormsModule, RouterLink],
+  selector: 'app-sign-up',
+  styleUrl: './sign-up.css',
+  templateUrl: './sign-up.html',
 })
 export class SignUp {
   // injected dependencies
   private fb = inject(FormBuilder);
-  private authService = inject(Auth);
+  private authService = inject(AuthService);
   private router = inject(Router);
 
   // ui state signals
@@ -109,26 +109,20 @@ export class SignUp {
     const { name, email, password, jobTitle } = this.form.value;
 
     // build api payload — job_title is optional
-   const payload = {
-  email: email!,
-  password: password!,
-  data: {
-    name: name!,
-    ...(jobTitle ? { department: jobTitle } : {}),
-  },
-};
-
-    this.authService.signUp(payload).subscribe({
-      // on success: redirect to login
+    this.authService.signUp({
+      email: email!,
+      password: password!,
+      full_name: name!,
+      job_title: jobTitle ?? '',
+    }).subscribe({
       next: () => {
         this.isLoading.set(false);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/login']); // if success go to login
       },
-      // on failure: show api error message
-      error: (err) => {
+      error: (err: { error?: { message?: string } }) => {
         this.isLoading.set(false);
         this.apiError.set(
-          err?.error?.message ?? 'Registration failed. Please try again.'
+          err?.error?.message ?? 'Registration failed. Please try again.' //if fail stay
         );
       },
     });

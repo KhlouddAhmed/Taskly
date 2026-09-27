@@ -1,0 +1,38 @@
+<header class="fixed top-0 right-0 left-0 z-30 flex h-16 items-center justify-between border-b border-[--color-slate-light] bg-[--color-background] px-6 lg:left-64">
+
+  <!-- Mobile: burger + logo -->
+  <div class="flex items-center gap-3 lg:hidden">
+    <button (click)="onMenuToggle()!()" class="p-1 text-[--color-slate-darkest]" aria-label="Open menu">
+      <!-- burger icon slot -->
+      <img src="icons/burger.svg" alt="menu" class="h-6 w-6" />
+    </button>
+    <header class="p-6">
+        <div class="flex items-center gap-2">
+            <img src="taskly-icon.svg" alt="Taskly logo" width="18" height="20" />
+            <span class="logo-text">TASKLY</span>
+        </div>
+    </header>
+  </div>
+
+  <!-- Desktop: empty left (sidebar covers it) -->
+  <div class="hidden lg:block"></div>
+
+  <!-- Right: user info -->
+  <div class="flex items-center gap-3">
+    @if (store.isLoading()) {
+      <div class="h-8 w-32 animate-pulse rounded bg-[--color-surface-low]"></div>
+    } @else if (store.error()) {
+      <span class="text-xs text-[--color-error]">Failed to load</span>
+    } @else {
+      <div class="hidden flex-col items-end md:flex">
+        <span class="text-sm font-semibold text-[--color-slate-darkest]">{{ store.fullName() }}</span>
+        <span class="font-[--font-size-label-sm] text-[length:--font-size-label-sm] font-[--font-weight-label-sm] tracking-[--letter-spacing-label-sm] uppercase text-[--color-primary]">
+          {{ store.jobTitle() }}
+        </span>
+      </div>
+      <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-[--color-primary] text-sm font-bold text-white">
+        {{ store.initials() }}
+      </div>
+    }
+  </div>
+</header>

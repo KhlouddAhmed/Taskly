@@ -1,0 +1,8 @@
+/* Active item */
+a.active-nav-item .nav-label {
+  color: var(--color-primary);
+}
+
+a.active-nav-item .nav-icon {
+  filter: invert(15%) sepia(90%) saturate(2000%) hue-rotate(200deg) brightness(80%);
+}

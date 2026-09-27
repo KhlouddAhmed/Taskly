@@ -1,0 +1,100 @@
+<!-- page wrapper -->
+<div class="bg-background min-h-screen">
+
+  <!-- logo -->
+  <header class="p-6">
+    <div class="flex items-center gap-2">
+      <img src="taskly-icon.svg" alt="Taskly logo" width="18" height="20" />
+      <span class="logo-text">TASKLY</span>
+    </div>
+  </header>
+
+  <!-- centered card -->
+  <main class="flex items-center justify-center px-4 pb-10">
+    <div class="w-full max-w-[480px] rounded-lg bg-white p-10 shadow-sm">
+
+      <!-- heading -->
+      <div class="mb-8 text-center">
+        <h1 class="text-slate-darkest text-[32px] font-semibold leading-10">
+          Welcome Back
+        </h1>
+        <p class="text-slate-mid mt-1 text-sm">
+          Please enter your details to access your workspace
+        </p>
+      </div>
+
+      <!-- form -->
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="flex flex-col gap-5">
+
+        <!-- email -->
+        <div class="form-field">
+          <label class="form-label"
+            [class.form-label-error]="f['email'].invalid && f['email'].touched">
+            EMAIL
+          </label>
+          <input formControlName="email" type="email" placeholder="yourname@company.com"
+            [class]="f['email'].invalid && f['email'].touched ? 'form-input-error' : 'form-input'" />
+          @if (f['email'].touched && f['email'].errors) {
+            @if (f['email'].errors['required']) {
+              <span class="text-error-dark text-[11px]">Email is required.</span>
+            } @else if (f['email'].errors['email']) {
+              <span class="text-error-dark text-[11px]">Enter a valid email address.</span>
+            }
+          }
+        </div>
+
+        <!-- password -->
+        <div class="form-field">
+          <label class="form-label"
+            [class.form-label-error]="f['password'].invalid && f['password'].touched">
+            PASSWORD
+          </label>
+          <div class="relative">
+            <input formControlName="password"
+              [type]="showPassword() ? 'text' : 'password'"
+              placeholder="Enter your password"
+              [class]="f['password'].invalid && f['password'].touched ? 'form-input-error pr-10' : 'form-input pr-10'" />
+            <button type="button" (click)="togglePassword()"
+              class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+              aria-label="Toggle password visibility">
+              <img [src]="showPassword() ? 'icons/eye-off.svg' : 'icons/eye-on.svg'"
+                alt="" width="20" height="20" />
+            </button>
+          </div>
+          @if (f['password'].touched && f['password'].errors?.['required']) {
+            <span class="text-error-dark text-[11px]">Password is required.</span>
+          }
+        </div>
+
+        <!-- remember me + forgot password -->
+        <div class="flex items-center justify-between">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input formControlName="rememberMe" type="checkbox"
+              class="h-4 w-4 rounded border-slate-light accent-primary" />
+            <span class="text-slate-mid text-sm">Remember Me</span>
+          </label>
+          <button type="button" class="text-primary text-sm font-semibold">
+            Forgot Password?
+          </button>
+        </div>
+
+        <!-- api error -->
+        @if (apiError()) {
+          <p class="text-error-dark text-center text-sm">{{ apiError() }}</p>
+        }
+
+        <!-- submit -->
+        <button type="submit" class="btn-primary w-full" [disabled]="isLoading()">
+          {{ isLoading() ? 'Logging in...' : 'Log In' }}
+        </button>
+
+        <!-- sign up link -->
+        <p class="text-slate-mid text-center text-sm pt-8">
+          Don't have an account?
+          <a routerLink="/sign-up" class="text-primary font-semibold">Sign Up</a>
+        </p>
+
+      </form>
+    </div>
+  </main>
+</div>
