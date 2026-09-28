@@ -7,11 +7,11 @@ import { BottomNav } from '../../shared/components/bottom-nav/bottom-nav';
 
 @Component({
   imports: [RouterOutlet, Navbar, Sidebar, MobileDrawer, BottomNav],
-  selector: 'app-auth-layout',
-  templateUrl: './auth-layout.html',
-  styleUrl: './auth-layout.css',
+  selector: 'app-main-layout',
+  templateUrl: './main-layout.html',
+  styleUrl: './main-layout.css',
 })
-export class AuthLayout {
+export class MainLayout {
   readonly isDrawerOpen = signal(false);
 
   openDrawer(): void {

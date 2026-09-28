@@ -1,0 +1,7 @@
+@if (toastService.toast()) {
+  <div
+    class="fixed bottom-6 left-1/2 z-100 -translate-x-1/2 rounded-md px-4 py-3 text-sm font-medium text-white shadow-lg"
+    [style]="toastService.toast()!.type === 'error' ? 'background:#BA1A1A;' : 'background:#059669;'">
+    {{ toastService.toast()!.message }}
+  </div>
+}

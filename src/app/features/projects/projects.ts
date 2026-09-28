@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
+  imports: [],
   selector: 'app-projects',
-  template: `<div class="p-6"><h1 class="text-xl font-semibold text-[--color-slate-darkest]">Projects</h1></div>`,
+  styleUrl: './projects.css',
+  templateUrl: './projects.html',
 })
-export class Projects {}
+export class Projects { }

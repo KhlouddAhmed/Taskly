@@ -2,6 +2,7 @@ import { Component, input, output, signal, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth';
+import { ToastService } from '../../../core/services/toast';
 
 @Component({
   imports: [RouterLink, RouterLinkActive],
@@ -12,6 +13,7 @@ import { AuthService } from '../../../core/services/auth';
 export class MobileDrawer {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private toastService = inject(ToastService);
 
   readonly isOpen = input.required<boolean>();
   readonly close = output<void>();
@@ -44,7 +46,7 @@ export class MobileDrawer {
       },
       error: () => {
         this.isLoggingOut.set(false);
-        alert('Logout failed, please try again.');
+        this.toastService.show('Logout failed, please try again.');
       },
     });
   }

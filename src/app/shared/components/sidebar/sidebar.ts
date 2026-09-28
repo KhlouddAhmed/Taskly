@@ -2,6 +2,7 @@ import { Component, signal, inject, HostListener, ElementRef } from '@angular/co
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth';
+import { ToastService } from '../../../core/services/toast';
 
 interface NavItem {
   label: string;
@@ -16,15 +17,16 @@ interface ProjectLink {
 }
 
 @Component({
-  selector: 'app-sidebar',
   imports: [RouterLink, RouterLinkActive],
-  templateUrl: './sidebar.html',
+  selector: 'app-sidebar',
   styleUrl: './sidebar.css',
+  templateUrl: './sidebar.html',
 })
 export class Sidebar {
   private el = inject(ElementRef);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private toastService = inject(ToastService);
 
   readonly isCollapsed = signal(false);
   readonly isProjectOpen = signal(true);
@@ -72,8 +74,12 @@ export class Sidebar {
       },
       error: () => {
         this.isLoggingOut.set(false);
-        alert('Logout failed, please try again.');
+        this.toastService.show('Logout failed, please try again.');
       },
     });
   }
+
+//   performLogout(): void {
+//   this.toastService.show('Logout failed, please try again.');
+// }
 }

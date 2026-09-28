@@ -1,11 +1,11 @@
 <aside
   [class]="isCollapsed() ? 'w-16' : 'w-64'"
-  class="fixed top-0 bottom-0 left-0 z-20 hidden flex-col justify-between bg-[#F1F3FF] p-4 transition-all duration-300 lg:flex">
+  class="fixed top-0 bottom-0 left-0 z-20 hidden flex-col justify-between bg-[#F1F3FF] 
+  p-4 transition-all duration-300 lg:flex">
 
-  <!-- Top Container (Logo + Navigation + Active Project Accordion) -->
   <div class="flex flex-col">
 
-    <!-- Logo Header -->
+    <!-- logo  -->
     <div class="mb-8 flex h-9 items-center px-2">
       @if (!isCollapsed()) {
         <div class="flex items-center gap-2">
@@ -19,7 +19,7 @@
       }
     </div>
 
-    <!-- Main Nav Links -->
+    <!-- main nav links -->
     <nav class="flex flex-col gap-1">
       @for (item of navItems; track item.route) {
         @if (!isCollapsed()) {
@@ -41,11 +41,11 @@
       }
     </nav>
 
-    <!-- Frame 5: Active Project Section -->
+    <!-- active project section -->
     <div class="mt-3 border-t border-black/10 pt-4">
       @if (!isCollapsed()) {
 
-        <!-- Frame 8: Accordion Header -->
+        <!-- accordion header -->
         <button
           (click)="toggleProject()"
           class="flex h-12 w-full cursor-pointer items-center justify-between p-3 transition"
@@ -61,7 +61,7 @@
             class="h-4 w-4 shrink-0" />
         </button>
 
-        <!-- Frame 7: Accordion Body -->
+        <!-- accordion body -->
         @if (isProjectOpen()) {
           <div class="flex flex-col gap-1 rounded-b-[6px] bg-white p-2">
             @for (link of projectLinks; track link.route) {
@@ -78,14 +78,14 @@
 
       } @else {
 
-        <!-- Collapsed Icon Button -->
+        <!-- collapsed icon button -->
         <button
           (click)="togglePopup()"
           class="mx-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-[6px] bg-[#D7E2FF] transition">
           <img src="icons/projects.svg" alt="project" class="h-5 w-5" />
         </button>
 
-        <!-- Collapsed Popup -->
+        <!-- collapsed Popup -->
         @if (isPopupOpen()) {
           <div class="absolute left-16 z-50 w-48 rounded-[6px] bg-white p-2 shadow-lg">
             @for (link of projectLinks; track link.route) {
@@ -105,7 +105,7 @@
 
   </div>
 
-  <!-- HorizontalBorder: Bottom Actions -->
+  <!-- horizontalborder: bottom actions -->
   <div class="flex flex-col gap-1 border-t border-[#C3C6D6]/20 pt-6">
     @if (!isCollapsed()) {
       <button
