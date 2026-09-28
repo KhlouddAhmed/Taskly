@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { User } from '../models/user.model';
+import { SignUpRequest, LoginRequest, AuthResponse } from '../models/auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -30,13 +31,8 @@ export class AuthService {
     sessionStorage.removeItem('access_token');
   }
 
-  signUp(data: {
-    email: string;
-    password: string;
-    full_name: string;
-    job_title: string;
-  }): Observable<{ access_token: string }> {
-    return this.http.post<{ access_token: string }>(
+  signUp(data: SignUpRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(
       `${environment.apiUrl}/auth/v1/signup`,
       {
         email: data.email,
@@ -47,11 +43,8 @@ export class AuthService {
     );
   }
 
-  login(data: {
-    email: string;
-    password: string;
-  }): Observable<{ access_token: string }> {
-    return this.http.post<{ access_token: string }>(
+  login(data: LoginRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(
       `${environment.apiUrl}/auth/v1/token?grant_type=password`,
       { email: data.email, password: data.password },
       { headers: this.headers }
