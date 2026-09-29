@@ -120,7 +120,7 @@ taskly/
 │   │   ├── core/
 │   │   ├── features/
 │   │   ├── shared/
-│   │   └── app.component.ts
+│   │   └── app.ts
 │   │
 │   ├── assets/
 │   └── environments/
