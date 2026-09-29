@@ -146,9 +146,6 @@ cp .env.example .env
 ```env
 API_URL=
 ```
-
->  Never commit actual secrets or `.env` files to the repository.
-
 ---
 
 ## Responsive Design
