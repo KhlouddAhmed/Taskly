@@ -45,7 +45,7 @@ Taskly is a task management web application built to simulate a real-world front
 The project follows a structured mentorship program where features are delivered incrementally through weekly tasks.
 
 Developers are provided with a complete set of resources including a Figma design file,
-a task board on Notion, and full API documentation — just like on actual projects.
+a task board on Notion, and full API documentation, just like on actual projects.
 
 ---
 
