@@ -155,13 +155,7 @@ API_URL=
 
 | Device | Support |
 |---|---|
-| Mobile | ✅ Fully Responsive |
-| Tablet | ✅ Fully Responsive |
-| Laptop | ✅ Fully Responsive |
-| Desktop | ✅ Fully Responsive |
-
----
-
-## License
-
-This project was created for educational and training purposes as part of a frontend mentorship program.
+| Mobile |  Fully Responsive |
+| Tablet |  Fully Responsive |
+| Laptop |  Fully Responsive |
+| Desktop |  Fully Responsive |
